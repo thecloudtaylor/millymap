@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />    
+    <script type='text/javascript'>
+    var map, infobox, layer;
+
+    //Create a simple reusable HTML template to keep things easy.
+    var htmlTemplate = '<div class="htmlPushpin">{text}</div>';
+
+    function GetMap()
+    {
+        map = new Microsoft.Maps.Map('#myMap', {
+            center: new Microsoft.Maps.Location(38.842028, -104.800073)
+        });
+
+        var center = map.getCenter();
+
+        //Create custom Pushpin
+        var pin = new Microsoft.Maps.Pushpin(center, {
+            title: 'Colorado Springs',
+            subTitle: '607 N Foote Ave',
+            text: '1'
+        });
+
+        //Add the pushpin to the map
+        map.entities.push(pin);
+    }
+
+    var addedPinIdx = 1;
+
+    function AddPushpin() {
+        //Get a random location in the current map view. 
+        var loc = Microsoft.Maps.TestDataGenerator.getLocations(1, map.getBounds());
+
+        //Create an Html Pushpin and add it to the layer.
+        layer.add(new HtmlPushpin(loc, htmlTemplate.replace('{text}', 'Add Pin: ' + addedPinIdx), { anchor: new Microsoft.Maps.Point(50, 12) }));
+
+        addedPinIdx++;
+    }
+
+    function BringIntoView() {
+        var bounds = layer.getBounds();
+        if (bounds) {
+            map.setView({ bounds: bounds, padding: 100 });
+        }
+    }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=<KEY>' async defer></script>
+    <style>
+        .htmlPushpin {
+            color:red;
+            background-color:white;
+            width:100px;
+            padding:2px;
+            text-align:center;
+
+            /* Disable the ability to select the text */
+            -webkit-user-select: none;  /* Chrome all / Safari all */
+            -moz-user-select: none;     /* Firefox all */
+            -ms-user-select: none;      /* IE 10+ */
+            user-select: none;          /* Likely future */      
+        }
+    </style>
+</head>
+<body>
+    <div id="myMap" style="position:relative;width:800px;height:600px;"></div>
+    <br/>
+    <fieldset style="width:800px;margin-top:10px;">
+        <legend>test</legend>
+        text
+    </fieldset>
+</body>
+</html>

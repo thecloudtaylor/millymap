@@ -1,0 +1,29 @@
+{
+  "name": "millymap",
+  "version": "1.0.0",
+  "description": "Map of where Milly has been",
+  "main": "HtmlPushpinLayerModule.js",
+  "scripts": { 
+    "test": "test type",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server",
+    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thecloudtaylor/millymap.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thecloudtaylor/millymap/issues"
+  },
+  "homepage": "https://github.com/thecloudtaylor/millymap#readme",
+  "dependencies": {
+    "bingmaps": "^2.0.3",
+    "concurrently": "^6.5.1",
+    "lite-server": "^2.6.1",
+    "typescript": "^4.5.4"
+  }
+}
