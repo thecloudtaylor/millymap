@@ -2,9 +2,10 @@
 <html>
 <head>
     <title></title>
-    <meta charset="utf-8" />    
+    <meta charset="utf-8" />
+    <script type = "text/javascript" src="app.js"></script>      
     <script type='text/javascript'>
-    var map, infobox, layer;
+    var map, infobox, layer, locations;
 
     //Create a simple reusable HTML template to keep things easy.
     var htmlTemplate = '<div class="htmlPushpin">{text}</div>';
@@ -26,28 +27,25 @@
 
         //Add the pushpin to the map
         map.entities.push(pin);
-    }
 
-    var addedPinIdx = 1;
+        locations = CreatePinList()
+        console.log(locations)
+        console.log(locations.length)
+        
+        for (var index = 0; index < locations.length; index++)
+        {
+            var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(locations[index].lat, locations[index].long), {
+                title: locations[index].mainName,
+                subTitle: locations[index].description,
+                text: (index+2).toString()
+            });
 
-    function AddPushpin() {
-        //Get a random location in the current map view. 
-        var loc = Microsoft.Maps.TestDataGenerator.getLocations(1, map.getBounds());
-
-        //Create an Html Pushpin and add it to the layer.
-        layer.add(new HtmlPushpin(loc, htmlTemplate.replace('{text}', 'Add Pin: ' + addedPinIdx), { anchor: new Microsoft.Maps.Point(50, 12) }));
-
-        addedPinIdx++;
-    }
-
-    function BringIntoView() {
-        var bounds = layer.getBounds();
-        if (bounds) {
-            map.setView({ bounds: bounds, padding: 100 });
+            map.entities.push(pin);
         }
     }
+
     </script>
-    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=<KEY>' async defer></script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AiL5RW06BB8mlU32xmcamgoaDh34GQZeQmutpFza4xpNNiFFpDOFd5B3wREDIE9M' async defer></script>
     <style>
         .htmlPushpin {
             color:red;

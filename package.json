@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Map of where Milly has been",
   "main": "HtmlPushpinLayerModule.js",
-  "scripts": { 
+  "scripts": {
     "test": "test type",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
