@@ -92,7 +92,6 @@ function CreatePinArray()
                 subTitle: locations[index].description,
                 text: (index+1).toString()
             });
-            console.log("test")
             pushPinandLoc.Add(pin, mapLoc);
             console.log("CreatePinArray() - Added ", locations[index].mainName, "to Map")
 
@@ -170,18 +169,28 @@ function handleMapClick(e: MouseEventArgs){
         title: 'New Location', 
         showCloseButton: true,
         description: 'Description: <input id="infoboxDescription" type="text" onclick="this.select();"/><br>' + 
-            'Placed By: <input id="infoboxName" type="text" onclick="this.select();"/>',
+            'Placed By: <input id="infoboxPlacedBy" type="text" onclick="this.select();"/>',
         actions: [{
             label: 'Save',
             eventHandler: function () {
-                alert('handleSave');
+                handleSave();
             }
         }, {
-            label: 'Cancle',
+            label: 'Cancel',
             eventHandler: function () {
-                alert('handleCancel');
+                CreateMap();
             }
         }] 
     });
     infobox.setMap(map);    
+}
+
+function handleSave()
+{
+    console.log("In handleSave()");
+    let description = document.getElementById('infoboxDescription').value;
+    let placedby = document.getElementById('infoboxPlacedBy').value;
+    console.log("infoboxDescription: "+ description);
+    console.log("infoboxPlacedBy: "+ placedby);
+
 }
