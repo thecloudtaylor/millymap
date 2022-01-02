@@ -101,31 +101,87 @@ function CreatePinArray()
     return pushPinandLoc;
 }
 
-function GetMap(){
+function CreateMap(){
     console.log("In GetMap()")
 
     var map:Microsoft.Maps.Map;
-
-    var pushPinandLoc:PushPinAndLocations = CreatePinArray();
 
     map = new Microsoft.Maps.Map('#myMap', {
         center: new Microsoft.Maps.Location(38.842028, -104.800073)
     });
 
+    var pushPinandLoc:PushPinAndLocations = CreatePinArray();
+
+    AddPinsToMap(map, pushPinandLoc);
+
+    var rect = Microsoft.Maps.LocationRect.fromLocations(pushPinandLoc.MapLocations);
+    window.addEventListener("resize", handleResize);
+    Microsoft.Maps.Events.addHandler(map, 'rightclick', (e) => { handleMapClick( e); });
+
+
+    map.setView({ bounds: rect, padding: 80 }); 
+    handleResize();
+}
+
+function AddPinsToMap(map:Microsoft.Maps.Map, pushPinandLoc:PushPinAndLocations){
     for (var index = 0; index < pushPinandLoc.length; index++)
     {
         //Add the pushpin to the map
         map.entities.push(pushPinandLoc.PushPins[index]);
     }
-
-    var rect = Microsoft.Maps.LocationRect.fromLocations(pushPinandLoc.MapLocations);
-
-    map.setView({ bounds: rect, padding: 80 }); 
 }
 
-function resize() {
-    window.addEventListener("resize", resize);
+function handleResize() {
     var mapDiv = document.getElementById('myMap');
-    mapDiv.style.width = (document.documentElement.scrollWidth - (document.documentElement.scrollWidth/20))  + 'px';
-    mapDiv.style.height = (document.documentElement.scrollHeight - (document.documentElement.scrollHeight/20))+ 'px';
+    mapDiv.style.width = (document.documentElement.scrollWidth *.9)  + 'px';
+    mapDiv.style.height = (document.documentElement.scrollHeight *.9)+ 'px';
+}
+
+function handleMapClick(e: MouseEventArgs){
+    console.log("In handleMapClick()")
+
+    var map = new Microsoft.Maps.Map(
+        document.getElementById('myMap'),
+        {
+            /* No need to set credentials if already passed in URL */
+        }
+    );
+
+    var pin = new Microsoft.Maps.Pushpin(e.location, {
+        title: "test",
+        subTitle: "test",
+        text: ("100").toString()
+    });
+
+    console.log(map.entities);
+
+    var pushPinandLoc:PushPinAndLocations = CreatePinArray();
+
+    pushPinandLoc.Add(pin, e.location);
+    AddPinsToMap(map, pushPinandLoc);
+
+    map.setView({
+        center: e.location,
+        zoom: 10
+    });
+
+
+    var infobox = new Microsoft.Maps.Infobox(e.location, { 
+        title: 'New Location', 
+        showCloseButton: true,
+        description: 'Description: <input id="infoboxDescription" type="text" onclick="this.select();"/><br>' + 
+            'Placed By: <input id="infoboxName" type="text" onclick="this.select();"/>',
+        actions: [{
+            label: 'Save',
+            eventHandler: function () {
+                alert('handleSave');
+            }
+        }, {
+            label: 'Cancle',
+            eventHandler: function () {
+                alert('handleCancel');
+            }
+        }] 
+    });
+    infobox.setMap(map);    
 }
