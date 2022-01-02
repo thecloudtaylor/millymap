@@ -1,0 +1,28 @@
+{
+    "locations": [
+        {
+            "mainName": "Colorado Springs, CO",
+            "description": "607 N Foote Ave",
+            "lat": "38.842028",
+            "long": "-104.800073"
+        },
+        {
+            "mainName": "Redmond, OR",
+            "description": "address",
+            "lat": "44.241206",
+            "long": "-121.203432"
+        },
+        {
+            "mainName": "Yuma, AZ",
+            "description": "address",
+            "lat": "32.660249",
+            "long": "-114.449449"
+        },
+        {
+            "mainName": "Jamica",
+            "description": "address",
+            "lat": "18.397274",
+            "long": "-78.288136"
+        }
+    ]
+}
